@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>BMI计算器</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="fronted_test -- BMI计算器" />
+  <meta name="keywords" content="BMI, 计算器, 健康" />
+  <meta name="author" content="GZ" />
+  <meta name="theme-color" content="#00ff00" />
+  <!-- 配置IOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="BMI计算器" />
+  <!-- 配置360 -->
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <!-- 设置网站图标 -->
+  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaQAAAGkAQMAAABEgsN2AAAAAXNSR0IArs4c6QAAAAZQTFRF8fHx45e//l2nZQAAAIhJREFUeNrt18ENQEAQhtF1UoZStaYkBUi4GAeyiREi5H3Hf/cVMKVIkqSH6ua1IfOFoiiKoiiKoiiKol5UJ6IoiqIoiqIoiqKoD6uYmhimzJVNURRFURRFURRFUVdU6obd6uMthjaGsdSjKIqiKIqiKIqiqFvUIYqiKIqiKIqiKIr6g5IkSfsWvqFOmPFkQzYAAAAASUVORK5CYII=" type="image/png" />
+  <link rel="apple-touch-icon" href="oj_logo.png" />
+  <script>
+    navigator.serviceWorker.register("sw.js");
+  </script>
+  <script>
+    /*@cc_on window.location.href="https://support.dmeng.net/upgrade-your-browser.html?referrer="+encodeURIComponent(window.location.href); @*/
+  </script>
+</head>
+
+<body>
+  <div class='header-bar' style="width:100%; display:flex; align-items:center;">
+    <a class="header-logo" href="https://github.com/leisilea/fronted_1_BMI_HTML-CSS-JS">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaQAAAGkAQMAAABEgsN2AAAAAXNSR0IArs4c6QAAAAZQTFRF8fHx45e//l2nZQAAAIhJREFUeNrt18ENQEAQhtF1UoZStaYkBUi4GAeyiREi5H3Hf/cVMKVIkqSH6ua1IfOFoiiKoiiKoiiKol5UJ6IoiqIoiqIoiqKoD6uYmhimzJVNURRFURRFURRFUVdU6obd6uMthjaGsdSjKIqiKIqiKIqiqFvUIYqiKIqiKIqiKIr6g5IkSfsWvqFOmPFkQzYAAAAASUVORK5CYII=" width="48" height="48" alt="logo" style="display:block;">
+    </a>
+    <div class="header-title">
+      <b style="font-size:1.5em;">BMI计算器</b>
+    </div>
+  </div>
+  <div class="container">
+    <form id="bmiForm">
+      <div class="form-row">
+        <label for="weight">体重 (kg):</label>
+        <input type="number" id="weight" name="weight" required>
+        <label for="height" style="margin-left:16px;">身高 (cm):</label>
+        <input type="number" id="height" name="height" required>
+        <button type="submit" style="margin-left:16px;">计算BMI</button>
+      </div>
+    </form>
+    <div style="height:16px"></div>
+    <div id="result"></div>
+  </div>
+</body>
+<script>
+  function calculateBMI(weight, height) {
+    if (height <= 0) {
+      return "身高必须大于0";
+    }
+    const heightInMeters = height / 100;
+    const bmi = weight / (heightInMeters * heightInMeters);
+    return bmi;
+  }
+
+  document.getElementById('bmiForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const weight = parseFloat(document.getElementById('weight').value);
+    const height = parseFloat(document.getElementById('height').value);
+    let resultText = '';
+    if (isNaN(weight) || isNaN(height) || height <= 0) {
+      resultText = '请输入有效的体重和身高';
+    } else {
+      const bmi = calculateBMI(weight, height);
+      resultText = `您的BMI是: ${bmi.toFixed(2)}`;
+    }
+    document.getElementById('result').textContent = resultText;
+  });
+</script>
+
+</html>
+<style>
+  .header-bar {
+    width: 100%;
+    align-items: center;
+    background: #f9f9f9;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); */
+    padding: 12px 0;
+  }
+
+  .header-logo {
+    display: block;
+    margin-left: 0%;
+  }
+
+  .header-title {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    letter-spacing: 2px;
+    /* 建议使用自适应布局，避免固定百分比。可以用justify-content: center; 或 space-between; 让标题居中或两端分布 */
+  }
+
+  .container {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 2vw;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+  }
+
+  .form-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .form-row label {
+    width: 100px;
+    text-align: right;
+    margin-right: 8px;
+  }
+
+  .form-row input {
+    width: 120px;
+  }
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+</style>
